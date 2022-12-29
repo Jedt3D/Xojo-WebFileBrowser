@@ -10,8 +10,11 @@ This is a Xojo Web File Browser with API 2.0. I've tried to learn something new 
   - has Session.CurrentFolder
   - if it's **.jpg** or **.png**, it'll show the image at the WebImageViewer
   - IOException
+  - if it's **.txt** or **.log**, it'll show the content in the text area
+  - when select image, you can download the image file from the URL link
+  - uploading file will be uploaded to **"upload/"** in **SpecialFolder.UserHome** folder
   
 ## TODO
-1. File/Image Uploader
+- Nil
 
 Credit: Worajedt Sitthidumrong <sjedt@3ddaily.com>

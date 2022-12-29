@@ -4,7 +4,7 @@ Begin WebPage WebPage1
    Compatibility   =   ""
    ControlID       =   ""
    Enabled         =   False
-   Height          =   672
+   Height          =   588
    ImplicitInstance=   True
    Index           =   -2147483648
    Indicator       =   0
@@ -21,14 +21,13 @@ Begin WebPage WebPage1
    MinimumHeight   =   400
    MinimumWidth    =   600
    TabIndex        =   0
-   Title           =   "Untitled"
+   Title           =   "Web File Browser"
    Top             =   0
    Visible         =   True
    Width           =   820
    _ImplicitInstance=   False
    _mDesignHeight  =   0
    _mDesignWidth   =   0
-   _mName          =   ""
    _mPanelIndex    =   -1
    Begin WebListBox lbxFiles
       ColumnCount     =   1
@@ -36,7 +35,7 @@ Begin WebPage WebPage1
       ControlID       =   ""
       Enabled         =   True
       HasHeader       =   True
-      Height          =   632
+      Height          =   509
       HighlightSortedColumn=   True
       Index           =   -2147483648
       Indicator       =   0
@@ -61,7 +60,7 @@ Begin WebPage WebPage1
       SelectedRowIndex=   0
       TabIndex        =   0
       Tooltip         =   ""
-      Top             =   20
+      Top             =   66
       Visible         =   True
       Width           =   475
       _mPanelIndex    =   -1
@@ -73,7 +72,7 @@ Begin WebPage WebPage1
       ControlID       =   ""
       CurrentText     =   ""
       Enabled         =   True
-      Height          =   315
+      Height          =   269
       Hint            =   ""
       Index           =   -2147483648
       Indicator       =   0
@@ -86,7 +85,7 @@ Begin WebPage WebPage1
       LockTop         =   True
       LockVertical    =   False
       MaximumCharactersAllowed=   0
-      ReadOnly        =   False
+      ReadOnly        =   True
       Scope           =   0
       TabIndex        =   1
       Text            =   ""
@@ -100,7 +99,7 @@ Begin WebPage WebPage1
    Begin WebImageViewer imvFile
       ControlID       =   ""
       Enabled         =   True
-      Height          =   309
+      Height          =   232
       HorizontalAlignment=   2
       Index           =   -2147483648
       Indicator       =   0
@@ -125,16 +124,135 @@ Begin WebPage WebPage1
       _mPanelIndex    =   -1
       _ProtectImage   =   False
    End
+   Begin WebFileUploader fileUploader
+      Caption         =   "Select"
+      ControlID       =   ""
+      Enabled         =   True
+      Filter          =   "image/jpg;image/png"
+      Height          =   38
+      Hint            =   ""
+      Index           =   -2147483648
+      Indicator       =   ""
+      Left            =   20
+      LockBottom      =   False
+      LockedInPosition=   False
+      LockHorizontal  =   False
+      LockLeft        =   True
+      LockRight       =   False
+      LockTop         =   True
+      LockVertical    =   False
+      MaximumBytes    =   0
+      MaximumFileCount=   1
+      Scope           =   0
+      TabIndex        =   3
+      TabStop         =   True
+      Tooltip         =   ""
+      Top             =   20
+      UploadTimeout   =   0
+      Visible         =   True
+      Width           =   367
+      _mPanelIndex    =   -1
+   End
+   Begin WebButton btnUpload
+      AllowAutoDisable=   False
+      Cancel          =   False
+      Caption         =   "Upload"
+      ControlID       =   ""
+      Default         =   True
+      Enabled         =   True
+      Height          =   38
+      Index           =   -2147483648
+      Indicator       =   1
+      Left            =   395
+      LockBottom      =   False
+      LockedInPosition=   False
+      LockHorizontal  =   False
+      LockLeft        =   True
+      LockRight       =   False
+      LockTop         =   True
+      LockVertical    =   False
+      Scope           =   0
+      TabIndex        =   4
+      TabStop         =   True
+      Tooltip         =   ""
+      Top             =   20
+      Visible         =   True
+      Width           =   100
+      _mPanelIndex    =   -1
+   End
+   Begin WebLink Link1
+      Appearance      =   0
+      Bold            =   False
+      ControlID       =   ""
+      Enabled         =   True
+      FontName        =   ""
+      FontSize        =   0.0
+      Height          =   38
+      Index           =   -2147483648
+      indicator       =   0
+      Italic          =   False
+      Left            =   503
+      LockBottom      =   False
+      LockedInPosition=   False
+      LockHorizontal  =   False
+      LockLeft        =   True
+      LockRight       =   True
+      LockTop         =   True
+      LockVertical    =   False
+      Multiline       =   False
+      PanelIndex      =   0
+      Scope           =   0
+      TabIndex        =   5
+      TabStop         =   True
+      Target          =   1
+      Text            =   "..."
+      TextAlignment   =   0
+      TextColor       =   &c0000FF00
+      Tooltip         =   ""
+      Top             =   297
+      Underline       =   False
+      URL             =   ""
+      Visible         =   True
+      Width           =   297
+      _mPanelIndex    =   -1
+   End
 End
 #tag EndWebPage
 
 #tag WindowCode
 	#tag Method, Flags = &h0
+		Sub GoIntoFolder(destination As FolderItem, fileListBox As WebListBox)
+		  Var f As FolderItem
+		  
+		  If fileListBox.SelectedRowIndex > 0  Then
+		    f = New FolderItem(destination)
+		    If f.IsFolder Then
+		      Try
+		        ListFiles(f)
+		        Session.CurrentFolder = f
+		      Catch e As IOException
+		        f = New FolderItem(SpecialFolder.UserHome)
+		        ListFiles(f)
+		        MessageBox("Error:" + e.Message)
+		      End Try
+		      
+		    End If
+		  ElseIf fileListBox.SelectedRowIndex = 0 Then
+		    f = New FolderItem(Session.CurrentFolder.Parent)
+		    ListFiles(f)
+		    Session.CurrentFolder = f 
+		    imvFile.Picture = xojologo
+		  End If
+		  
+		End Sub
+	#tag EndMethod
+
+	#tag Method, Flags = &h0
 		Sub ListFiles(startFolder as FolderItem)
 		  lbxFiles.RemoveAllRows
 		  tarInfo.Text = ""
 		  
-		  lbxFiles.AddRow("Parent ..")
+		  lbxFiles.AddRow("[Go ⬆️ ..]")
 		  
 		  For Each file As FolderItem In startFolder.Children
 		    lbxFiles.AddRow(file.DisplayName)
@@ -160,6 +278,8 @@ End
 	#tag EndEvent
 	#tag Event
 		Sub SelectionChanged(Rows() as Integer)
+		  #Pragma Unused Rows
+		  
 		  Var f As FolderItem
 		  
 		  If Me.SelectedRowIndex > 0 Then
@@ -176,10 +296,19 @@ End
 		    ext = f.DisplayName.Lowercase
 		    
 		    If ext.Right(3) = "png" Or ext.Right(3) = "jpg" Then
-		      'Var pic As New FolderItem(f)
+		      // show image preview and setup the download link
 		      imvFile.Picture = Picture.Open(f)
+		      link1.Text = "Download: " + f.DisplayName
+		      link1.URL = imvFile.Picture.URL
+		    ElseIf ext.Right(3) = "txt" Or ext.Right(3) = "log" Then
+		      // read text file or log file
+		      Var Input As TextInputStream
+		      Input = TextInputStream.Open(f)
+		      tarInfo.Text = Input.ReadAll
 		    Else
 		      imvFile.Picture = xojologo
+		      link1.Text = "..."
+		      link1.URL = "#"
 		    End If
 		  End If
 		  
@@ -188,28 +317,84 @@ End
 	#tag EndEvent
 	#tag Event
 		Sub DoublePressed(row as integer, column as integer)
+		  #Pragma Unused row
+		  #Pragma Unused column
+		  
+		  GoIntoFolder(Session.CurrentFolder.Child(Me.SelectedRowValue), lbxFiles)
+		  
+		End Sub
+	#tag EndEvent
+#tag EndEvents
+#tag Events fileUploader
+	#tag Event
+		Sub UploadStarted(FileCount As Integer)
+		  #Pragma Unused FileCount
+		  
+		  tarInfo.AppendReverse("File is uploading...")
+		  
+		End Sub
+	#tag EndEvent
+	#tag Event
+		Sub UploadProgressed(Percent as Integer)
+		  tarInfo.AppendReverse(Percent.ToString + " uploaded...")
+		  
+		End Sub
+	#tag EndEvent
+	#tag Event
+		Sub UploadFinished(Files() As WebUploadedFile)
+		  tarInfo.AppendReverse("File uploaded successfully")
+		  
+		  // saving the uploaded file
+		  // only to "upload" folder in User Home
+		  Var outputfile As FolderItem
+		  
+		  Try
+		    outputfile = New FolderItem(SpecialFolder.UserHome.NativePath + "upload/"+Files(0).Name)
+		    files(0).save(outputfile)
+		    
+		    imvFile.Picture = Picture.Open(outputfile)
+		    link1.Text = "Download: " + outputfile.DisplayName
+		    link1.URL = imvFile.Picture.URL
+		    
+		  Catch e As IOException
+		    MessageBox("Error:" + e.Message)
+		  End Try
+		  
+		  GoIntoFolder(Session.CurrentFolder.Child("upload"),lbxFiles)
+		End Sub
+	#tag EndEvent
+	#tag Event
+		Sub UploadError(error as RuntimeException)
+		  tarInfo.AppendReverse("File uploading is Error. " + EndOfLine + error.Message)
+		End Sub
+	#tag EndEvent
+	#tag Event
+		Sub FileAdded(Filename As String, Bytes as UInt64, MimeType as String)
+		  #Pragma Unused Filename
+		  #Pragma Unused MimeType
+		  
+		  tarInfo.AppendReverse("One file added: " + Filename + "(" + Bytes.ToString + " bytes)")
+		  
 		  Var f As FolderItem
 		  
-		  If Me.SelectedRowIndex > 0  Then
-		    f = New FolderItem(Session.CurrentFolder.Child(Me.SelectedRowValue))
-		    If f.IsFolder Then
-		      Try
-		        ListFiles(f)
-		        Session.CurrentFolder = f
-		      Catch e As IOException
-		        f = New FolderItem(SpecialFolder.UserHome)
-		        ListFiles(f)
-		        MessageBox("Error:" + e.Message)
-		      End Try
-		      
-		    End If
-		  ElseIf Me.SelectedRowIndex = 0 Then
-		    f = New FolderItem(Session.CurrentFolder.Parent)
-		    ListFiles(f)
-		    Session.CurrentFolder = f 
-		    imvFile.Picture = xojologo
+		  f = New FolderItem(SpecialFolder.UserHome.NativePath + "upload")
+		  If Not f.Exists Then
+		    f.CreateFolder
 		  End If
 		  
+		End Sub
+	#tag EndEvent
+	#tag Event
+		Sub Shown()
+		  Me.Filter = "image/png;image/jpeg"
+		  
+		End Sub
+	#tag EndEvent
+#tag EndEvents
+#tag Events btnUpload
+	#tag Event
+		Sub Pressed()
+		  fileUploader.StartUpload
 		End Sub
 	#tag EndEvent
 #tag EndEvents

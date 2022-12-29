@@ -2,6 +2,15 @@
 Protected Class WebTextArea2
 Inherits WebTextArea
 	#tag Method, Flags = &h0
+		Sub AppendReverse(AddedText As String)
+		  Me.CurrentText = Me.Text
+		  Me.Text = AddedText + EndOfLine + Me.CurrentText
+		  Me.CurrentText = ""
+		  
+		End Sub
+	#tag EndMethod
+
+	#tag Method, Flags = &h0
 		Sub AppendText(AddedText As String)
 		  Me.CurrentText = Me.Text
 		  Me.Text = Me.CurrentText + EndOfLine + AddedText

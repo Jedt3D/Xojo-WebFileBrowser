@@ -1,0 +1,46 @@
+#tag MultiImage
+Image xojologo
+	#tag ImageRepresentation
+		SaveInfo = APHRcwECAQAAAAA5QzpcVXNlcnNcc2plZHRcWG9qbyBQcm9qZWN0c1xXZWJGaWxlQnJvd3Nlclx4b2pvLWxvZ28uanBnAwAAAAABAAQAAAAAAQAAAAAAAAA=
+		FullPath = C:\Users\sjedt\Xojo Projects\WebFileBrowser\xojo-logo.jpg
+		PartialPath = xojo-logo.jpg
+		#tag ImageSpecification
+			Comment = 
+			Device = 31
+			HSize = 327.00
+			Orientation = Any
+			Platform = 15
+			PPI = 72
+			VSize = 310.00
+		#tag EndImageSpecification
+	#tag EndImageRepresentation
+	#tag ImageRepresentation
+		SaveInfo = APHRcwECAQAAAAA5QzpcVXNlcnNcc2plZHRcWG9qbyBQcm9qZWN0c1xXZWJGaWxlQnJvd3Nlclx4b2pvLWxvZ28uanBnAwAAAAABAAQAAAAAAQAAAAAAAAA=
+		FullPath = C:\Users\sjedt\Xojo Projects\WebFileBrowser\xojo-logo.jpg
+		PartialPath = xojo-logo.jpg
+		#tag ImageSpecification
+			Comment = 
+			Device = 31
+			HSize = 327.00
+			Orientation = Any
+			Platform = 15
+			PPI = 144
+			VSize = 310.00
+		#tag EndImageSpecification
+	#tag EndImageRepresentation
+	#tag ImageRepresentation
+		SaveInfo = APHRcwECAQAAAAA5QzpcVXNlcnNcc2plZHRcWG9qbyBQcm9qZWN0c1xXZWJGaWxlQnJvd3Nlclx4b2pvLWxvZ28uanBnAwAAAAABAAQAAAAAAQAAAAAAAAA=
+		FullPath = C:\Users\sjedt\Xojo Projects\WebFileBrowser\xojo-logo.jpg
+		PartialPath = xojo-logo.jpg
+		#tag ImageSpecification
+			Comment = 
+			Device = 31
+			HSize = 327.00
+			Orientation = Any
+			Platform = 15
+			PPI = 216
+			VSize = 310.00
+		#tag EndImageSpecification
+	#tag EndImageRepresentation
+End Image
+#tag EndMultiImage

@@ -13,7 +13,9 @@ This is a Xojo Web File Browser with API 2.0. I've tried to learn something new 
   - if it's **.txt** or **.log**, it'll show the content in the text area
   - when select image, you can download the image file from the URL link
   - uploading file will be uploaded to **"upload/"** in **SpecialFolder.UserHome** folder
-  
+
+3. This example made with Xojo 2022r4.1.
+
 ## TODO
 - Nil
 

@@ -13,3 +13,5 @@ This is a Xojo Web File Browser with API 2.0. I've tried to learn something new 
   
 ## TODO
 1. File/Image Uploader
+
+Credit: Worajedt Sitthidumrong <sjedt@3ddaily.com>
